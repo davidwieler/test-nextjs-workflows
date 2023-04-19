@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /.next
+  - source: /
     destination: /home/ec2-user/test
     overwrite: true
 file_exists_behavior: OVERWRITE
@@ -14,11 +14,11 @@ hooks:
 #      runas: root
 # Install:
   AfterInstall:
-    - location: ~/home/ec2-user/test/scripts/after_install.sh
+    - location: scripts/after_install.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: ~/home/ec2-user/test/scripts/application_start.sh
+    - location: scripts/application_start.sh
       timeout: 300
       runas: root
 # ValidateService:
