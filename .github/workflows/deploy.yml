@@ -15,12 +15,6 @@ jobs:
       with:
         node-version: '18.x'
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build Next.js App
-      run: npm run build
-
       # Step 2 - set AWS creds. TODO: Update this to temp creds using IAM roles.
     - name: Set AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
