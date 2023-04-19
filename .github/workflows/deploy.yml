@@ -6,11 +6,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1
+      # Step 1 - install deps and run build scripts
     - name: Checkout to repo
       uses: actions/checkout@v2
 
-    - name: Use Node.js
+    - name: Use Node.js. Version 18.x
       uses: actions/setup-node@v2
       with:
         node-version: '18.x'
@@ -21,20 +21,20 @@ jobs:
     - name: Build Next.js App
       run: npm run build
 
-      # Step 2
-    # - name: Set AWS credentials
-    #   uses: aws-actions/configure-aws-credentials@v2
-    #   with:
-    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #     aws-region: us-east-2
+      # Step 2 - set AWS creds. TODO: Update this to temp creds using IAM roles.
+    - name: Set AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
 
-      # Step 3
-    # - name: Create CodeDeploy Deployment
-    #   id: deploy
-    #   run: |
-    #     aws deploy create-deployment \
-    #     --application-name nodejs-tester-app \
-    #     --deployment-group-name nodejs-tester-app-cd1 \
-    #     --deployment-config-name CodeDeployDefault.OneAtATime \
-    #     --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+      # Step 3 - trigger AWS CodeDeploy
+    - name: Create CodeDeploy Deployment
+      id: deploy
+      run: |
+        aws deploy create-deployment \
+        --application-name nodejs-tester-app \
+        --deployment-group-name nodejs-tester-app-cd1 \
+        --deployment-config-name CodeDeployDefault.OneAtATime \
+        --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
