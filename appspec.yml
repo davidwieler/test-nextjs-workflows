@@ -14,11 +14,11 @@ hooks:
 #      runas: root
 # Install:
   AfterInstall:
-    - location: scripts/after_install.sh
+    - location: scripts/after-install.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: scripts/application_start.sh
+    - location: scripts/application-start.sh
       timeout: 300
       runas: root
 # ValidateService:
