@@ -11,7 +11,7 @@ export const getStaticProps = () => {
   }
 };
 
-export default function Home(props) {
+export default function Home(props: ReturnType<typeof getStaticProps>) {
   console.log(props);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
